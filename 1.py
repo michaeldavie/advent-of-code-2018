@@ -1,14 +1,9 @@
-# Part 1
-
 with open('1.input', 'r') as input_file:
     changes = [int(r) for r in input_file.readlines()]
 
-output = 0
+# Part 1
 
-for c in changes:
-    output += c
-
-print('Part 1: ' + str(output))
+print(sum(changes))
 
 # Part 2
 
@@ -23,5 +18,5 @@ while not found:
             new_values.add(output)
         else:
             found = True
-            print('Part 2: ' + str(output))
+            print(str(output))
             break
