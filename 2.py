@@ -1,37 +1,28 @@
-import string
-
-import editdistance
-
 with open('2.input', 'r') as input_file:
     ids = [l.strip() for l in input_file.readlines()]
 
 # Part 1
 
+from itertools import product, combinations
+from collections import Counter
 
-def same_letters(id):
-    char_counts = {char: id.count(char) for char in string.ascii_lowercase}
-    return set(char_counts.values())
+factors = {2: 0,
+           3: 0}
 
+combos = product(ids, list(factors.keys()))
 
-counts = {id: same_letters(id) for id in ids}
+for id, f in combos:
+    if f in set(Counter(id).values()):
+        factors[f] += 1
 
-factors = {}
-
-for f in [2, 3]:
-    factors[f] = len([char_count for char_count in counts.values() if f in char_count])
-
-checksum = factors[2] * factors[3]
-print(checksum)
+print(factors[2] * factors[3])
 
 
 # Part 2
 
-output = ''
+import editdistance
 
-for a in ids:
-    for b in ids:
-        if editdistance.eval(a, b) == 1:
-            for pos, char in enumerate(a):
-                if char == b[pos]:
-                    output += char
-            print(output)
+for a, b in combinations(ids, 2):
+    if editdistance.eval(a, b) == 1:
+        print(''.join([char for pos, char in enumerate(a) if char == b[pos]]))
+        break
