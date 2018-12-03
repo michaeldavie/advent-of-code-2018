@@ -6,14 +6,7 @@ with open('2.input', 'r') as input_file:
 from itertools import product, combinations
 from collections import Counter
 
-factors = {2: 0,
-           3: 0}
-
-combos = product(ids, list(factors.keys()))
-
-for id, f in combos:
-    if f in set(Counter(id).values()):
-        factors[f] += 1
+factors = Counter([match for id, match in product(ids, [2, 3]) if match in set(Counter(id).values())])
 
 print(factors[2] * factors[3])
 

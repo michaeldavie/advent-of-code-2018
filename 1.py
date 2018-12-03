@@ -7,16 +7,15 @@ print(sum(changes))
 
 # Part 2
 
+from itertools import cycle
+
 output = 0
 new_values = set()
-found = None
 
-while not found:
-    for c in changes:
-        output += c
-        if output not in new_values:
-            new_values.add(output)
-        else:
-            found = True
-            print(str(output))
-            break
+for c in cycle(changes):
+    output += c
+    if output not in new_values:
+        new_values.add(output)
+    else:
+        print(str(output))
+        break
