@@ -31,7 +31,7 @@ print(sleepy_guard * sleepiest_minute)
 
 # Part 2
 
-sleepy_minutes_all = {g: Counter(chain.from_iterable([n['span'] for n in naps if n['guard'] == g])) for g in guard_shifts.values()}
+sleepy_minutes_all = {g: Counter(chain.from_iterable([n['span'] for n in naps if n['guard'] == g])) for g in set(guard_shifts.values())}
 tuple_madness = [(g, v.most_common(1)[0][0], v.most_common(1)[0][1]) for g, v in sleepy_minutes_all.items() if v]
 tip_top = max(tuple_madness, key=itemgetter(2))
 print(tip_top[0] * tip_top[1])
