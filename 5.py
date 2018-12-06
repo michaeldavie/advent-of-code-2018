@@ -3,8 +3,6 @@ import string
 with open('5.input', 'r') as input_file:
     original = input_file.read()
 
-# Part 1
-
 search = [l + l.upper() for l in string.ascii_lowercase] + [l.upper() + l for l in string.ascii_lowercase]
 
 def react(polymer):
@@ -18,16 +16,17 @@ def react(polymer):
 
     return polymer
 
-reacted = react(original)
-print(len(reacted))
+# Part 1
+
+print(len(react(original)))
 
 # Part 2
 
 results = []
 
-for l in search:
-    reduced = original.replace(l[0], '')
-    reduced = reduced.replace(l[1], '')
+for l in string.ascii_lowercase:
+    reduced = original.replace(l, '')
+    reduced = reduced.replace(l.upper(), '')
     reduced = react(reduced)
     results.append(len(reduced))
 
