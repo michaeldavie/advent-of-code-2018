@@ -20,9 +20,9 @@ def grouper(iterable, n, fillvalue=None):
     args = [iter(iterable)] * n
     return zip_longest(*args, fillvalue=fillvalue)
 
-nap_stats = [(n[0][0], range(n[0][1], n[1][1]), n[1][1] - n[0][1]) for n in grouper(nap_points, 2)]
-naps = [{'date': n[0], 'guard': guard_shifts[n[0]], 'span': n[1], 'duration': n[2]} for n in nap_stats]
-guard_totals = {g: sum([n['duration'] for n in naps if n['guard'] == g]) for g in set(guard_shifts.values())}
+nap_stats = [(n[0][0], range(n[0][1], n[1][1])) for n in grouper(nap_points, 2)]
+naps = [{'date': n[0], 'guard': guard_shifts[n[0]], 'span': n[1]} for n in nap_stats]
+guard_totals = {g: sum([len(n['span']) for n in naps if n['guard'] == g]) for g in set(guard_shifts.values())}
 sleepy_guard = max(guard_totals.items(), key=itemgetter(1))[0]
 
 sleepy_minutes = Counter(chain.from_iterable([n['span'] for n in naps if n['guard'] == sleepy_guard]))
