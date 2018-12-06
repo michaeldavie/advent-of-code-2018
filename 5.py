@@ -12,7 +12,7 @@ def react(polymer):
         start = len(polymer)
         for s in search:
             polymer = polymer.replace(s, '')
-        done = True if len(polymer) == start else False
+        done = (len(polymer) == start)
 
     return polymer
 
