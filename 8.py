@@ -1,7 +1,7 @@
 from collections import deque
 
 with open('8.input', 'r') as input_file:
-    input_deque = deque(map(int, input_file.read().split(' ')))
+    input_deque = deque(int(n) for n in input_file.read().split())
 
 # Part 1
 
@@ -10,10 +10,10 @@ def sum_meta(data_deque):
     metas = data_deque.popleft()
     meta_sum = 0
 
-    for children in range(0, children):
+    for c in range(children):
         meta_sum += sum_meta(data_deque)
 
-    meta_sum += sum([data_deque.popleft() for m in range(0, metas)])
+    meta_sum += sum([data_deque.popleft() for m in range(metas)])
 
     return meta_sum
 
@@ -29,10 +29,10 @@ def node_value(data_deque):
     child_values = []
 
     if children > 0:
-        for child in range(0, children):
+        for c in range(children):
             child_values.append(node_value(data_deque))
 
-    meta_values = [data_deque.popleft() for m in range(0, meta_count)]
+    meta_values = [data_deque.popleft() for m in range(meta_count)]
 
     if children == 0:
         return sum(meta_values)
