@@ -1,20 +1,26 @@
+from collections import deque
 import string
+import time
 
 with open('5.input', 'r') as input_file:
     original = input_file.read()
 
-search = [l + l.upper() for l in string.ascii_lowercase] + [l.upper() + l for l in string.ascii_lowercase]
+start = time.time()
 
 def react(polymer):
-    done = False
+    in_deque = deque(polymer)
+    out_deque = deque()
+    buffer = in_deque.popleft()
 
-    while not done:
-        start = len(polymer)
-        for s in search:
-            polymer = polymer.replace(s, '')
-        done = (len(polymer) == start)
+    while in_deque:
+        if buffer != in_deque[0] and buffer.lower() == in_deque[0].lower():
+            in_deque.popleft()
+            buffer = out_deque.pop() if out_deque else in_deque.popleft()
+        else:
+            out_deque.append(buffer)
+            buffer = in_deque.popleft()
 
-    return polymer
+    return ''.join(out_deque) + buffer
 
 # Part 1
 
@@ -31,3 +37,5 @@ for l in string.ascii_lowercase:
     results.append(len(reduced))
 
 print(min(results))
+
+print("------- {:.3f} seconds -------".format(time.time() - start))
